@@ -295,16 +295,31 @@ http://tympanus.net/codrops/2013/06/18/caption-hover-effects/
           <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6">
             <input type="submit" class="form-control" value="SEND MESSAGE">
             <?php 
-   if(isset($_POST['send'])) {
+   if(isset($_POST['send message'])) {
  
-   $to = 'singhchait@gmail.com';
    
    $name = $_POST['name'];
-   $mail_from = $_POST['email'];
-   	  $subject = 'New customer message from website';
-   	  $message = $_POST['message'];
+   $visitor_email = $_POST['email'];
+   $message = $_POST['message'];
+ 	
+   if(empty($name)||empty(visitor_email))
+   { 
+   		echo "Name and email are mandatory!";
+   		exit;
+   }
    
-   $sent = mail($to, $subject, $message);
+   $mail_from = $_POST['singhchait@gmail.com'];
+   $subject = 'New customer message from website';
+   $email_body = "You have reveived a new message from the user $name.\n".
+   					"email address: $visitor_email\n".
+   					"Here is the message:\n $message".
+   					
+   		
+   $to = 'singhchait@gmail.com';
+   $headers = "From: $mail_from \r\n";
+    
+   
+   $sent = mail($to, $subject, $email_body, $headers);
    if($sent) {
    echo 'Your message has been sent successfully!';
    } else {
